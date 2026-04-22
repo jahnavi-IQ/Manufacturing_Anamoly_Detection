@@ -1,0 +1,237 @@
+{
+    "metadata": {
+        "model_name": "AI-Pump-XGBoost",
+        "version": "1.0-XGB-OPTIMIZED",
+        "training_timestamp": "2025-11-19 22:09:29",
+        "training_duration_seconds": 1493.606714,
+        "framework": "XGBoost",
+        "random_seed": 42,
+        "optimization": "XGBoost Native Feature Selection",
+        "changes": [
+            "XGBoost gradient boosting classifier",
+            "Bayesian Optimization with Optuna",
+            "Multi-pump aggregation (4 pumps)",
+            "ALL 42 features used (no statistical pre-filtering)",
+            "XGBoost native feature selection via tree splitting",
+            "Enhanced augmentation (6x with 5 techniques)",
+            "Optimal threshold calculation",
+            "Feature importance analysis"
+        ]
+    },
+    "dataset_info": {
+        "pump_ids": [
+            "id_00",
+            "id_02",
+            "id_04",
+            "id_06"
+        ],
+        "total_samples": 4205,
+        "total_features_extracted": 42,
+        "feature_selection_method": "XGBoost Native",
+        "class_distribution": {
+            "total": {
+                "normal": 3749,
+                "abnormal": 456
+            },
+            "ratio": "1:8.22"
+        }
+    },
+    "data_split": {
+        "strategy": "stratified_train_test_split",
+        "test_size": 0.2,
+        "validation_size": 0.15,
+        "training": {
+            "total_samples": 10462,
+            "original_samples": 4078,
+            "percentage": 248.7990487514863,
+            "class_distribution": {
+                "normal": 2549,
+                "abnormal": 7913
+            },
+            "includes_augmented": true,
+            "augmentation_factor": 15
+        },
+        "validation": {
+            "total_samples": 505,
+            "percentage": 12.009512485136742,
+            "class_distribution": {
+                "normal": 450,
+                "abnormal": 55
+            }
+        },
+        "testing": {
+            "total_samples": 841,
+            "percentage": 20.0,
+            "class_distribution": {
+                "normal": 750,
+                "abnormal": 91
+            },
+            "original_only": true
+        }
+    },
+    "model_architecture": {
+        "type": "XGBoost Gradient Boosting with Native Feature Selection",
+        "hyperparameters": {
+            "max_depth": 4.0,
+            "min_child_weight": 3.0,
+            "learning_rate": 0.13666943328202277,
+            "subsample": 0.9233589392465844,
+            "colsample_bytree": 0.7218455076693483,
+            "gamma": 0.19534422801276774,
+            "reg_alpha": 0.6842330265121569,
+            "reg_lambda": 0.8803049874792026,
+            "objective": "binary:logistic",
+            "eval_metric": "['logloss', 'auc', 'error']",
+            "scale_pos_weight": 2.577025148489827,
+            "seed": 42.0,
+            "tree_method": "hist"
+        },
+        "num_boost_round": 500,
+        "best_iteration": 404
+    },
+    "bayesian_optimization": {
+        "enabled": true,
+        "method": "Recall-Focused Bayesian Optimization (Optuna)",
+        "n_trials": 100,
+        "best_recall_score": 1.0,
+        "best_trial_number": 4,
+        "validation_metrics": {
+            "accuracy": 0.9485148514851485,
+            "recall": 1.0,
+            "precision": 0.6790123456790124,
+            "f1_score": 0.8088235294117647
+        },
+        "optimized_hyperparameters": {
+            "max_depth": 4.0,
+            "min_child_weight": 3.0,
+            "learning_rate": 0.13666943328202277,
+            "subsample": 0.9233589392465844,
+            "colsample_bytree": 0.7218455076693483,
+            "gamma": 0.19534422801276774,
+            "reg_alpha": 0.6842330265121569,
+            "reg_lambda": 0.8803049874792026,
+            "scale_pos_weight": 2.577025148489827
+        }
+    },
+    "training_configuration": {
+        "optimizer": "Gradient Boosting",
+        "scale_pos_weight": 2.577025148489827,
+        "early_stopping_rounds": 50,
+        "class_imbalance_method": "scale_pos_weight",
+        "feature_selection": "XGBoost Native (no statistical pre-filtering)"
+    },
+    "training_history": {
+        "total_iterations": 455,
+        "best_iteration": 404,
+        "stopped_early": true,
+        "final_metrics": {
+            "train_auc": 1.0,
+            "train_logloss": 0.00854768684118858,
+            "train_error": 0.0,
+            "val_auc": 0.9967272727272727,
+            "val_logloss": 0.1342768607841514,
+            "val_error": 0.05148514851485148
+        },
+        "best_iteration_metrics": {
+            "train_auc": 1.0,
+            "train_logloss": 0.00925318988955326,
+            "val_auc": 0.9965252525252525,
+            "val_logloss": 0.13577505715495794
+        }
+    },
+    "feature_importance": {
+        "total_features": 42,
+        "features_80pct_importance": 42,
+        "features_95pct_importance": 42,
+        "zero_importance_features": 42
+    },
+    "threshold_optimization": {
+        "enabled": true,
+        "strategy": "TARGET MET: Recall \u2265 97% AND Precision \u2265 70%",
+        "target_recall": 0.97,
+        "min_precision": 0.7,
+        "default_threshold": 0.5,
+        "optimal_threshold": 0.5920000000000005,
+        "default_metrics": {
+            "recall": 0.989010989010989,
+            "precision": 0.6474820143884892,
+            "f1_score": 0.782608695652174
+        },
+        "optimal_metrics": {
+            "recall": 0.978021978021978,
+            "precision": 0.7007874015748031,
+            "f1_score": 0.8165137614678899
+        },
+        "recall_improvement_percent": -1.1111111111111183
+    },
+    "test_performance": {
+        "metrics": {
+            "accuracy": {
+                "value": 0.9524375743162902,
+                "percentage": "95.24%"
+            },
+            "precision": {
+                "value": 0.7007874015748031,
+                "percentage": "70.08%"
+            },
+            "recall": {
+                "value": 0.978021978021978,
+                "percentage": "97.80%"
+            },
+            "f1_score": {
+                "value": 0.8165137614678899,
+                "percentage": "81.65%"
+            },
+            "auc_roc": {
+                "value": 0.9955164835164836,
+                "percentage": "99.55%"
+            },
+            "specificity": {
+                "value": 0.9493333333333334,
+                "percentage": "94.93%"
+            },
+            "sensitivity": {
+                "value": 0.978021978021978,
+                "percentage": "97.80%"
+            }
+        },
+        "confusion_matrix": {
+            "true_negatives": 712,
+            "false_positives": 38,
+            "false_negatives": 2,
+            "true_positives": 89,
+            "matrix": [
+                [
+                    712,
+                    38
+                ],
+                [
+                    2,
+                    89
+                ]
+            ]
+        },
+        "error_analysis": {
+            "total_errors": 40,
+            "error_rate": 4.756242568370987,
+            "false_alarm_rate": 5.066666666666666,
+            "missed_anomaly_rate": 2.197802197802198
+        }
+    },
+    "model_artifacts": {
+        "model_path": "/home/chanakya/sound_classification/models_ml_v2/pump_xgb_model.json",
+        "results_path": "/home/chanakya/sound_classification/models_ml_v2/pump_xgb_results.pkl",
+        "json_report_path": "/home/chanakya/sound_classification/models_ml_v2/training_report.json"
+    },
+    "production_readiness": {
+        "overall_score": "GOOD",
+        "recommendations": [
+            "Model uses XGBoost native feature selection (optimized approach)",
+            "Bayesian-optimized hyperparameters",
+            "38 false alarms detected",
+            "Catches 97.8% of anomalies",
+            "Overall accuracy: 95.24%",
+            "F1-Score: 81.65%"
+        ]
+    }
+}

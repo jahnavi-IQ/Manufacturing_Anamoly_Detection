@@ -1,0 +1,4 @@
+# Python
+__pycache__/
+*.log
+6_dB_pump/

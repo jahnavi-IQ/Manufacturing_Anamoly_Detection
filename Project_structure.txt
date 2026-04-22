@@ -1,0 +1,46 @@
+PUMP ANOMALY DETECTION SYSTEM - PROJECT STRUCTURE
+==================================================
+
+pump_anomaly_detection/
+│
+│
+├── api/                                # FastAPI backend
+│   ├── __pychache__/
+│   ├── __init__.py                     # Package initialization
+│   └── main.py                         # REST API endpoints
+│
+├── models_ml/                          # Model artifacts directory
+│   ├── pump_xgb_model.json             # Trained XGBoost model
+│   ├── pump_xgb_results.pkl            # Training metadata & results
+│   ├── training_report.json            # Comprehensive training report
+│   └── training_statistics.pkl         # Feature statistics (generated once)
+│
+├── scripts/                            # Utility scripts
+│   └── training_stats_generator.py     # Generate training statistics (run once)
+│
+├── src/                                # Core source modules
+│   ├── __pychache__/
+│   ├── __init__.py                     # Package initialization
+│   ├── config.py                       # Centralized configuration management
+│   ├── explainability.py               # Explainability & reasoning engine
+│   ├── feature_extractor.py            # Audio feature extraction (matches training)
+│   ├── inference_engine.py             # Core prediction engine
+│   └── utils.py                        # Helper functions & utilities
+│
+├── ui/                                 # Streamlit frontend
+│   └── components/                     # UI components
+│   │    ├── __pychache__/
+│   │    ├── __init__.py                 # Package initialization
+│   │    ├── visualizations.py           # Plotly charts & graphs
+│   │    └── styles.py                   # Custom CSS styling
+│   │
+│   ├── __init__.py                     # Package initialization
+│   └── app.py                # Main UI application
+│
+├── visualizations/   
+│
+├── pump_ml.py                          # Original training script (existing)
+├── requirements.txt                    # Python dependencies
+├── README.md                           # Project documentation
+└── project_structure.txt               # This file
+
