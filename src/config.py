@@ -254,6 +254,30 @@ FEATURE_DESCRIPTIONS = {
     'bandwidth_std': 'Spectral bandwidth variability'
 }
 
+class AWSLambdaConfig(Config):
+    """AWS Lambda-specific configuration overrides"""
+    
+    # Check if running in AWS Lambda
+    IS_LAMBDA = os.getenv('AWS_EXECUTION_ENV', '').startswith('AWS_Lambda')
+    
+    if IS_LAMBDA:
+        # In Lambda, models are in /tmp (ephemeral storage)
+        MODELS_DIR = Path('/tmp/models')
+        MODELS_DIR.mkdir(parents=True, exist_ok=True)
+        
+        # Update model paths for Lambda
+        MODEL_PATH = MODELS_DIR / "pump_xgb_model.json"
+        RESULTS_PATH = MODELS_DIR / "pump_xgb_results.pkl"
+        TRAINING_REPORT_PATH = MODELS_DIR / "training_report.json"
+        TRAINING_STATS_PATH = MODELS_DIR / "training_statistics.pkl"
+        
+        # Logging for Lambda (CloudWatch)
+        LOG_LEVEL = "INFO"
+        LOG_FORMAT = "[%(asctime)s] %(levelname)s - %(name)s - %(message)s"
+        LOG_FILE = "/tmp/pump_anomaly.log"
+    
+    # API settings (for reference, not used in Lambda)
+    API_RELOAD = False  # Never reload in Lambda
 
 # Export configuration
 config = Config()

@@ -39,6 +39,9 @@ pump_anomaly_detection/
 │
 ├── visualizations/   
 │
+├── .gitignore
+├── confusion_matrix.py
+├── lambda_handler.py
 ├── pump_ml.py                          # Original training script (existing)
 ├── requirements.txt                    # Python dependencies
 ├── README.md                           # Project documentation

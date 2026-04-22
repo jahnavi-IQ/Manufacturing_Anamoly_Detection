@@ -1,7 +1,5 @@
 """
-Pump-Net User Interface Package
-Contains Streamlit dashboard
+Pump Anomaly Detection - API Module
 """
 
-__version__ = "1.0.0"
-
+__version__ = "1.0"
