@@ -1,11 +1,11 @@
 📝 Usage - Now You Can Run:
 
-Start API:
+# Start API:
 cd api
 conda activate sound_cls(environment)
 python main.py
 
-Start UI:
+# Start UI:
 cd ui
 conda activate sound_cls(environment)
 streamlit run app.py
