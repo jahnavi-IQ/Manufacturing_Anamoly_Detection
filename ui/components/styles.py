@@ -420,30 +420,6 @@ CUSTOM_CSS = """
 </style>
 """
 
-# API status indicator
-def get_api_status_html(is_connected: bool) -> str:
-    """
-    Get HTML for API status indicator
-    
-    Args:
-        is_connected: Whether API is connected
-    
-    Returns:
-        HTML string
-    """
-    status_class = "status-online" if is_connected else "status-offline"
-    status_text = " Connected" if is_connected else " Disconnected"
-    status_color = "#28a745" if is_connected else "#dc3545"  
-    
-    html = f"""
-    <div style="display: flex; align-items: center; padding: 0.5rem;">
-        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background-color: {status_color}; margin-right: 8px;"></span>
-        <span style="color: #ffffff; font-weight: 600;">API Status: </span>
-        <span style="color: {status_color}; font-weight: 600;">{status_text}</span>
-    </div>
-    """
-    
-    return html
 
 # Model summary display 
 def get_model_summary_html(training_report: dict) -> str:
@@ -623,10 +599,6 @@ def create_simple_metric_card_html(metrics: dict) -> str:
 if __name__ == "__main__":
     print("CSS Styling Module Test")
     print("=" * 60)
-    
-    # Test API status
-    status_html = get_api_status_html(True)
-    print("✅ API status HTML generated")
     
     # Test severity badge
     badge_html = get_severity_badge_html("Severe")

@@ -26,7 +26,7 @@ from datetime import datetime
 
 # Import custom modules
 from src.config import config
-from components.styles import CUSTOM_CSS, get_api_status_html, get_model_summary_html
+from components.styles import CUSTOM_CSS, get_model_summary_html
 from components.visualizations import (
     create_feature_deviation_chart,
     create_feature_importance_chart,
@@ -123,10 +123,6 @@ def render_sidebar():
     with st.sidebar:
         st.markdown("## System Status")
         
-        # API Health Check
-        is_healthy, health_data = check_api_health()
-        st.markdown(get_api_status_html(is_healthy), unsafe_allow_html=True)
-        
         # Data Summary
         st.markdown("####")
         training_report = get_training_report()
@@ -187,7 +183,7 @@ def main():
         
 
         # Predict button
-        if st.button("🔍 Analyze Pump Audio", type="primary", width='stretch'):
+        if st.button("Analyze Pump Audio", type="primary", width='stretch'):
             with st.spinner("Analyzing audio... This may take a few seconds..."):
                 
                 start_time = datetime.now()
@@ -257,9 +253,9 @@ def main():
                     
                     # Create tabs
                     tab1, tab2, tab3 = st.tabs([
-                        "🔍 Explainability",
-                        "🔬 Feature Analysis",
-                        "💡 Recommendations"
+                        "Explainability",
+                        "Feature Analysis",
+                        "Recommendations"
                     ])
                     
                     # TAB 1: EXPLAINABILITY
@@ -294,7 +290,7 @@ def main():
                                     st.plotly_chart(fig, width='stretch')
                                 
                                 # Top deviating features table
-                                st.markdown("### 🔝 Top 10 Deviating Features")
+                                st.markdown("### Top 10 Deviating Features")
                                 
                                 top_10 = all_deviations[:10]
                                 
@@ -384,7 +380,7 @@ def main():
                     
                     # TAB 2: FEATURE ANALYSIS
                     with tab2:
-                        st.markdown("## 🔬 Extracted Features")
+                        st.markdown("## Extracted Features")
                         
                         # ===================================================================
                         # SECTION 1: ALL EXTRACTED FEATURES (Grouped)
