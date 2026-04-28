@@ -90,18 +90,18 @@ def predict_audio(audio_bytes, filename):
     Send audio file to API for prediction
     """
     try:
+        import base64
+        audio_b64 = base64.b64encode(audio_bytes).decode('utf-8')
         response = requests.post(
             f"{config.API_URL}/predict",
-            files={"file": (filename, audio_bytes, "audio/wav")},
-            timeout=30
+            data=audio_bytes, 
+            headers={"Content-Type": "audio/wav"},
         )
-
         if response.status_code == 200:
             return response.json(), None
         else:
             error_msg = response.json().get('message', 'Unknown error')
             return None, f"API Error: {error_msg}"
-
     except requests.exceptions.ConnectionError:
         return None, "Cannot connect to API server. Is it running?"
     except requests.exceptions.Timeout:
