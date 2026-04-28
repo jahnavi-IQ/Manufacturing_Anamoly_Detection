@@ -23,6 +23,7 @@ import os
 import sys
 sys.path.insert(0, os.path.dirname(__file__))
 
+from src.config import config
 from src.inference_engine import get_detector
 from src.utils import logger, ModelLoadingError
 
@@ -32,6 +33,40 @@ logger.setLevel(logging.INFO)
 # Global detector instance (persists across Lambda invocations)
 detector = None
 
+def _download_models_from_s3():
+    bucket = os.environ.get("MODEL_S3_BUCKET", "").strip()
+    if not bucket:
+        raise RuntimeError("MODEL_S3_BUCKET environment variable is required")
+
+    prefix = os.environ.get("MODEL_S3_PREFIX", "").strip("/")
+    base = f"{prefix}/" if prefix else ""
+
+    s3 = boto3.client("s3")
+    target_dir = Path("/tmp/models")
+    target_dir.mkdir(parents=True, exist_ok=True)
+
+    required_files = [
+        "pump_xgb_model.json",
+        "pump_xgb_results.pkl",
+        "training_report.json",
+        "training_statistics.pkl",
+    ]
+
+    for name in required_files:
+        key = f"{base}{name}"
+        dst = target_dir / name
+        if not dst.exists():
+            logger.info(f"Downloading s3://{bucket}/{key} -> {dst}")
+            s3.download_file(bucket, key, str(dst))
+
+    # Point runtime config to /tmp downloaded files
+    config.MODELS_DIR = target_dir
+    config.MODEL_PATH = target_dir / "pump_xgb_model.json"
+    config.RESULTS_PATH = target_dir / "pump_xgb_results.pkl"
+    config.TRAINING_REPORT_PATH = target_dir / "training_report.json"
+    config.TRAINING_STATS_PATH = target_dir / "training_statistics.pkl"
+
+
 
 def init_detector():
     """Initialize detector on first Lambda invocation"""
@@ -40,21 +75,22 @@ def init_detector():
     if detector is None:
         try:
             logger.info("🔧 Initializing detector on first invocation...")
+            _download_models_from_s3()
             detector = get_detector()
             
             # Validate
             is_valid, issues = detector.validate_setup()
             
             if not is_valid:
-                logger.error("❌ Detector validation failed!")
+                logger.error("Detector validation failed!")
                 for issue in issues:
                     logger.error(f"   {issue}")
                 raise RuntimeError("Detector validation failed")
             
-            logger.info("✅ Detector ready for predictions")
+            logger.info("Detector ready for predictions")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize detector: {e}")
+            logger.error(f"Failed to initialize detector: {e}")
             raise
     
     return detector
@@ -273,3 +309,4 @@ if __name__ == "__main__":
     response = lambda_handler(test_event, context)
     
     print(json.dumps(response, indent=2))
+

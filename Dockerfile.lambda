@@ -1,0 +1,24 @@
+FROM public.ecr.aws/lambda/python:3.11
+
+ENV NUMBA_CACHE_DIR=/tmp/numba_cache
+
+RUN mkdir -p /tmp/numba_cache
+
+RUN yum install -y libsndfile && yum clean all
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir "numpy<2.0" && \
+    pip install --no-cache-dir "numba==0.59.1" && \
+    pip install --no-cache-dir \
+    scipy==1.13.1 \
+    scikit-learn==1.4.2 \
+    soxr==0.3.7 \
+    librosa==0.10.0 \
+    soundfile==0.12.1 \
+    xgboost==2.1.4 \
+    boto3==1.28.25
+
+COPY lambda_handler.py ${LAMBDA_TASK_ROOT}/
+COPY src ${LAMBDA_TASK_ROOT}/src
+
+CMD ["lambda_handler.lambda_handler"]

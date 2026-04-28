@@ -347,46 +347,46 @@ class ExplainabilityEngine:
             if confidence >= 0.90:
                 recommendations.extend([
                     "⚠️ **URGENT**: Immediate inspection required",
-                    "Check mechanical components (bearings, impeller, seals)",
-                    "Review maintenance history for patterns",
-                    "Consider backup pump activation",
-                    "Document current operating conditions"
+                    "🔍 Check mechanical components (bearings, impeller, seals)",
+                    "📊 Review maintenance history for patterns",
+                    "🔄 Consider backup pump activation",
+                    "📸 Document current operating conditions"
                 ])
             
             # Medium confidence abnormal
             elif confidence >= 0.70:
                 recommendations.extend([
                     "⚠️ Schedule inspection within 24-48 hours",
-                    "Monitor closely for changes",
-                    "Check features with highest deviations",
-                    "Log current operating parameters",
-                    "Prepare backup systems"
+                    "📈 Monitor closely for changes",
+                    "🔍 Check features with highest deviations",
+                    "📝 Log current operating parameters",
+                    "🔄 Prepare backup systems"
                 ])
             
             # Low confidence abnormal
             else:
                 recommendations.extend([
                     "⚠️ Potential anomaly detected (low confidence)",
-                    "Compare with historical baseline",
-                    "Investigate top deviating features",
-                    "Increase monitoring frequency",
-                    "Re-test if conditions change"
+                    "📊 Compare with historical baseline",
+                    "🔍 Investigate top deviating features",
+                    "📈 Increase monitoring frequency",
+                    "🔄 Re-test if conditions change"
                 ])
         
         else:  # Normal
             if confidence >= 0.90:
                 recommendations.extend([
                     "✅ Continue normal operations",
-                    "Maintain regular maintenance schedule",
-                    "Keep logs for trend analysis",
-                    "Periodic re-testing recommended"
+                    "📅 Maintain regular maintenance schedule",
+                    "📊 Keep logs for trend analysis",
+                    "🔍 Periodic re-testing recommended"
                 ])
             else:
                 recommendations.extend([
                     "✅ Operation appears normal",
-                    "Monitor for changes (lower confidence)",
-                    "Compare with recent recordings",
-                    "Re-test if unusual sounds noticed"
+                    "⚠️ Monitor for changes (lower confidence)",
+                    "📊 Compare with recent recordings",
+                    "🔍 Re-test if unusual sounds noticed"
                 ])
         
         return recommendations

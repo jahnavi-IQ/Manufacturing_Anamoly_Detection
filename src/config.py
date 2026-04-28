@@ -37,14 +37,6 @@ class Config:
     PUMP_IDS = ["id_00", "id_02", "id_04", "id_06"]
     
     # ========================================================================
-    # LOGGING CONFIGURATION
-    # ========================================================================
-    
-    LOG_LEVEL = "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
-    LOG_FORMAT = "[%(asctime)s] %(levelname)s - %(name)s - %(message)s"
-    LOG_FILE = "pump_anomaly.log"
-    
-    # ========================================================================
     # AUDIO PROCESSING PARAMETERS
     # ========================================================================
     
@@ -100,6 +92,11 @@ class Config:
     # Request limits
     MAX_REQUESTS_PER_MINUTE = 60
     
+    # Logging configuration
+    LOG_LEVEL = "INFO"
+    LOG_FORMAT = "[%(asctime)s] %(levelname)s - %(name)s - %(message)s"
+    LOG_FILE = "pump_anomaly.log"
+    
     # ========================================================================
     # STREAMLIT UI CONFIGURATION
     # ========================================================================
@@ -111,6 +108,7 @@ class Config:
     
     # API endpoint (for Streamlit to call)
     API_URL = f"http://localhost:{API_PORT}"
+    #API_URL = "https://4u3cex6172.execute-api.us-east-1.amazonaws.com/prod"
     
     # Visualization settings
     FIGURE_HEIGHT = 400
@@ -179,9 +177,6 @@ class Config:
         print(f"\nUI Configuration:")
         print(f"  Port:           {cls.UI_PORT}")
         print(f"  URL:            http://localhost:{cls.UI_PORT}")
-        print(f"\nLogging Configuration:")
-        print(f"  Level:          {cls.LOG_LEVEL}")
-        print(f"  File:           {cls.LOG_FILE}")
         print("=" * 80)
 
 
@@ -265,6 +260,30 @@ FEATURE_DESCRIPTIONS = {
     'bandwidth_std': 'Spectral bandwidth variability'
 }
 
+class AWSLambdaConfig(Config):
+    """AWS Lambda-specific configuration overrides"""
+    
+    # Check if running in AWS Lambda
+    IS_LAMBDA = os.getenv('AWS_EXECUTION_ENV', '').startswith('AWS_Lambda')
+    
+    if IS_LAMBDA:
+        # In Lambda, models are in /tmp (ephemeral storage)
+        MODELS_DIR = Path('/tmp/models')
+        MODELS_DIR.mkdir(parents=True, exist_ok=True)
+        
+        # Update model paths for Lambda
+        MODEL_PATH = MODELS_DIR / "pump_xgb_model.json"
+        RESULTS_PATH = MODELS_DIR / "pump_xgb_results.pkl"
+        TRAINING_REPORT_PATH = MODELS_DIR / "training_report.json"
+        TRAINING_STATS_PATH = MODELS_DIR / "training_statistics.pkl"
+        
+        # Logging for Lambda (CloudWatch)
+        LOG_LEVEL = "INFO"
+        LOG_FORMAT = "[%(asctime)s] %(levelname)s - %(name)s - %(message)s"
+        LOG_FILE = "/tmp/pump_anomaly.log"
+    
+    # API settings (for reference, not used in Lambda)
+    API_RELOAD = False  # Never reload in Lambda
 
 # Export configuration
 config = Config()

@@ -13,6 +13,7 @@ Core prediction engine that:
 import numpy as np
 import xgboost as xgb
 import pickle
+import sys
 from pathlib import Path
 from typing import Dict, Tuple, Optional, List
 
@@ -113,7 +114,18 @@ class PumpAnomalyDetector:
         try:
             with open(self.results_path, 'rb') as f:
                 self.metadata = pickle.load(f)
+        except ModuleNotFoundError as e:
+            if "numpy._core" not in str(e):
+                raise ModelLoadingError(f"Failed to load metadata: {e}")
+            logger.warning("Pickle compatibility shim applied for numpy._core")
+            import numpy.core as numpy_core
+            sys.modules.setdefault("numpy._core", numpy_core)
+            with open(self.results_path, 'rb') as f:
+                self.metadata = pickle.load(f)
+        except Exception as e:
+            raise ModelLoadingError(f"Failed to load metadata: {e}")
             
+        try:
             # Extract important parameters
             self.optimal_threshold = self.metadata['threshold_info']['optimal_threshold']
             self.sample_rate = self.metadata['data_info']['sample_rate']
