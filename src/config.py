@@ -107,8 +107,8 @@ class Config:
     UI_ICON = "🔧"
     
     # API endpoint (for Streamlit to call)
-    API_URL = f"http://localhost:{API_PORT}"
-    #API_URL = "https://4u3cex6172.execute-api.us-east-1.amazonaws.com/prod"
+    #API_URL = f"http://localhost:{API_PORT}"
+    API_URL = "https://4u3cex6172.execute-api.us-east-1.amazonaws.com/prod"
     
     # Visualization settings
     FIGURE_HEIGHT = 400
