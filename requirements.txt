@@ -10,4 +10,4 @@ plotly
 requests
 pandas
 python-multipart
-setuptools
+setuptools>=68.0.0
