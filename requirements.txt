@@ -2,7 +2,7 @@ numpy<2.0
 scipy==1.13.1
 scikit-learn==1.4.2
 soxr==0.3.7
-librosa==0.10.1
+librosa==0.10.2
 soundfile==0.12.1
 xgboost==2.1.4
 boto3==1.28.25
@@ -11,3 +11,4 @@ requests
 pandas
 python-multipart
 setuptools>=68.0.0
+importlib-resources>=6.0.0
