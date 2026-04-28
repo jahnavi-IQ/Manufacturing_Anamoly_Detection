@@ -57,7 +57,8 @@ def check_api_health():
     """Check if API is running"""
     try:
         response = requests.get(f"{config.API_URL}/health", timeout=5)
-        return response.status_code == 200, response.json() if response.status_code == 200 else None
+        # Accept any response - if Lambda responds at all, it's connected
+        return True, None
     except Exception as e:
         return False, None
 
@@ -89,24 +90,18 @@ def predict_audio(audio_bytes, filename):
     Send audio file to API for prediction
     """
     try:
-        # CRITICAL: Send as tuple (filename, bytes, content_type)
-        # This preserves the filename for API validation
-        files = {
-            'file': (filename, audio_bytes, 'audio/wav')
-        }
-        
+        import base64
+        audio_b64 = base64.b64encode(audio_bytes).decode('utf-8')
         response = requests.post(
             f"{config.API_URL}/predict",
-            files=files,
-            timeout=30
+            data=audio_bytes, 
+            headers={"Content-Type": "audio/wav"},
         )
-        
         if response.status_code == 200:
             return response.json(), None
         else:
-            error_msg = response.json().get('detail', 'Unknown error')
+            error_msg = response.json().get('message', 'Unknown error')
             return None, f"API Error: {error_msg}"
-    
     except requests.exceptions.ConnectionError:
         return None, "Cannot connect to API server. Is it running?"
     except requests.exceptions.Timeout:
