@@ -75,13 +75,20 @@ def get_model_info():
 
 
 def get_training_report():
-    """Get training report from API"""
     try:
-        response = requests.get(f"{config.API_URL}/training-report", timeout=5)
-        if response.status_code == 200:
-            return response.json()
-        return None
-    except:
+        import boto3
+        s3 = boto3.client(
+            's3',
+            region_name='us-east-1',
+            aws_access_key_id=st.secrets["aws"]["AWS_ACCESS_KEY_ID"],
+            aws_secret_access_key=st.secrets["aws"]["AWS_SECRET_ACCESS_KEY"]
+        )
+        response = s3.get_object(
+            Bucket='pump-anomaly-models-prod-2026',
+            Key='training_report.json'
+        )
+        return json.loads(response['Body'].read().decode('utf-8'))
+    except Exception as e:
         return None
 
 
