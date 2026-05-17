@@ -420,21 +420,28 @@ CUSTOM_CSS = """
 
     /* Hide Streamlit Cloud toolbar and footer */
 
-    /* Hide Fork + GitHub (top right) — keep ⋮ menu button */
+    /* Hide Fork + GitHub top right - keep only ⋮ */
     [data-testid="stToolbarActions"] button:not(:last-of-type) {
         display: none !important;
     }
     
-    /* Hide bottom Streamlit badges */
+    /* Hide bottom badges - viewerBadge and profileContainer */
+    a._viewerBadge_nim44_23,
+    ._container_gzau3_1,
+    ._profileContainer_gzau3_53 {
+        display: none !important;
+    }
+    
+    /* Hide the iframe that holds bottom badges */
+    iframe[src*="statuspage.io"] {
+        display: none !important;
+    }
+    
     footer {
         display: none !important;
     }
     
     [data-testid="stStatusWidget"] {
-        display: none !important;
-    }
-    
-    [class*="viewerBadge"] {
         display: none !important;
     }
 </style>
