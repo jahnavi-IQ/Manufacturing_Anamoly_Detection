@@ -420,12 +420,20 @@ CUSTOM_CSS = """
 
     /* Hide Streamlit Cloud toolbar and footer */
     /* Hide only Fork and GitHub, keep sidebar toggle and ⋮ */
-    [data-testid="stToolbarActions"] button:not(:last-of-type) {
+
+    /* Hide Fork, GitHub - keep sidebar toggle and ⋮ */
+    [data-testid="stToolbarActions"] > *:not(:last-child) {
         display: none !important;
     }
     
     header a {
         display: none !important;
+    }
+    
+    /* Make sure sidebar toggle stays visible */
+    [data-testid="stSidebarCollapsedControl"] {
+        display: block !important;
+        visibility: visible !important;
     }
     
     footer {
