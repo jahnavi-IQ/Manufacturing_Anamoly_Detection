@@ -417,6 +417,28 @@ CUSTOM_CSS = """
         font-weight: bold;
         margin: 0;
     }
+
+    /* Hide Streamlit Cloud toolbar and footer */
+    
+    [data-testid="stToolbar"] {
+        display: none !important;
+    }
+
+    [data-testid="stHeader"] {
+        display: none !important;
+    }
+
+    footer {
+        visibility: hidden !important;
+    }
+
+    [data-testid="stStatusWidget"] {
+        display: none !important;
+    }
+
+    [class*="viewerBadge"] {
+        display: none !important;
+    }
 </style>
 """
 
