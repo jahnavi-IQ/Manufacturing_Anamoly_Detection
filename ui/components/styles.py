@@ -422,12 +422,19 @@ CUSTOM_CSS = """
     /* Hide only Fork and GitHub, keep sidebar toggle and ⋮ */
 
     /* Hide Fork, GitHub - keep sidebar toggle and ⋮ */
-    /* Hide entire header */
-    header[data-testid="stHeader"] {
+    /* Hide toolbar items */
+    [data-testid="stToolbarActions"] > *:not(:last-child) {
         display: none !important;
     }
     
-    /* Bring back only sidebar toggle */
+    [data-testeid="stToolbarActions"] a {
+        display: none !important;
+    }
+    
+    header a {
+        display: none !important;
+    }
+    
     [data-testid="stSidebarCollapsedControl"] {
         display: block !important;
         visibility: visible !important;
