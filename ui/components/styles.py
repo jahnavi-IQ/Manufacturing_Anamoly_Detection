@@ -420,35 +420,6 @@ CUSTOM_CSS = """
 
     /* Hide Streamlit Cloud toolbar and footer */
 
-    /* Hide toolbar */
-    [data-testid="stToolbar"] {
-        visibility: hidden !important;
-        display: none !important;
-    }
-        
-    /* Hide bottom badges - viewerBadge and profileContainer */
-    a._viewerBadge_nim44_23,
-    ._container_gzau3_1,
-    ._profileContainer_gzau3_53 {
-        display: none !important;
-    }
-    
-    /* Hide the iframe that holds bottom badges */
-    iframe[src*="statuspage.io"] {
-        display: none !important;
-    }
-    
-    footer {
-        display: none !important;
-    }
-    
-    [data-testid="stStatusWidget"] {
-        display: none !important;
-    }
-
-    [data-testid="collapsedControl"] {
-    display: none !important;
-    }
 </style>
 """
 
