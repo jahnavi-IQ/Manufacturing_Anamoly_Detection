@@ -159,7 +159,7 @@ def main():
     render_sidebar()
     
     # Main header
-    st.markdown('<h1 class="main-header">Pump Anomaly Detection System</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">Pump Fault Detection</h1>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">AI-Powered Acoustic Analysis with Explainability</p>', unsafe_allow_html=True)
     
     # Check API connection
