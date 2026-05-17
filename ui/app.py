@@ -166,7 +166,7 @@ def main():
     is_healthy, _ = check_api_health()
     
     if not is_healthy:
-        st.error("⚠️ **API Server Not Connected!** Please start the API server before using this interface.")
+        st.error("**API Server Not Connected!** Please start the API server before using this interface.")
         st.info("Start the server with: `uvicorn main:app --host 0.0.0.0 --port 8000 --reload`")
         return
     
