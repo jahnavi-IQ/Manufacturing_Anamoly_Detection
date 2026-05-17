@@ -421,24 +421,20 @@ CUSTOM_CSS = """
     /* Hide Streamlit Cloud toolbar and footer */
 
     /* Hide Fork + GitHub (top right) — keep ⋮ menu button */
-    header a[href*="github.com"] {
+    [data-testid="stToolbarActions"] button:not(:last-of-type) {
         display: none !important;
     }
-
-    [data-testid="stDecoration"] {
-        display: none !important;
-    }
-
-    /* Hide bottom green/red Streamlit badges */
+    
+    /* Hide bottom Streamlit badges */
     footer {
         display: none !important;
     }
-
-    [class*="viewerBadge"] {
+    
+    [data-testid="stStatusWidget"] {
         display: none !important;
     }
-
-    [data-testid="stStatusWidget"] {
+    
+    [class*="viewerBadge"] {
         display: none !important;
     }
 </style>
