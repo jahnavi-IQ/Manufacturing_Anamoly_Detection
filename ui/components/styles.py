@@ -445,6 +445,10 @@ CUSTOM_CSS = """
     [data-testid="stStatusWidget"] {
         display: none !important;
     }
+
+    [data-testid="collapsedControl"] {
+    display: none !important;
+    }
 </style>
 """
 
