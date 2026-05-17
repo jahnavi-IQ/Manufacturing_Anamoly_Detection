@@ -420,11 +420,12 @@ CUSTOM_CSS = """
 
     /* Hide Streamlit Cloud toolbar and footer */
 
-    /* Hide Fork + GitHub top right - keep only ⋮ */
-    [data-testid="stToolbarActions"] button:not(:last-of-type) {
+    /* Hide toolbar */
+    [data-testid="stToolbar"] {
+        visibility: hidden !important;
         display: none !important;
     }
-    
+        
     /* Hide bottom badges - viewerBadge and profileContainer */
     a._viewerBadge_nim44_23,
     ._container_gzau3_1,
