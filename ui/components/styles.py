@@ -450,6 +450,12 @@ CUSTOM_CSS = """
     [data-testid="stStatusWidget"] {
         display: none !important;
     }
+
+    /* Hide + button in file uploader */
+    [data-testid="stFileUploader"] button[aria-label="Add files"],
+    [data-testid="stFileUploader"] button[aria-label="Add file"] {
+        display: none !important;
+    }
 </style>
 """
 
