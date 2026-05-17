@@ -1,5 +1,2 @@
-[client]
-toolbarMode = "minimal"
-
-[ui]
-hideSidebarNav = false
+[browser]
+gatherUsageStats = false
