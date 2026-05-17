@@ -103,8 +103,8 @@ class Config:
     
     # Streamlit settings
     UI_PORT = 8501
-    UI_TITLE = "🔧 Pump Anomaly Detection System"
-    UI_ICON = "🔧"
+    UI_TITLE = "Pump Anomaly Detection System"
+    UI_ICON = ""
     
     # API endpoint (for Streamlit to call)
     #API_URL = f"http://localhost:{API_PORT}"
