@@ -422,7 +422,12 @@ CUSTOM_CSS = """
     /* Hide only Fork and GitHub, keep sidebar toggle and ⋮ */
 
     /* Hide Fork, GitHub - keep sidebar toggle and ⋮ */
-    [data-testid="stToolbarActions"] > *:not(:last-child) {
+
+    [data-testid="stToolbarActions"] > *:not(:last-child):not(:nth-last-child(2)) {
+    display: none !important;
+    }
+    
+    [data-testid="stToolbarActions"] > *:nth-last-child(2) {
         display: none !important;
     }
     
