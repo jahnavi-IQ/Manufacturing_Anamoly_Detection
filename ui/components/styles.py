@@ -419,24 +419,22 @@ CUSTOM_CSS = """
     }
 
     /* Hide Streamlit Cloud toolbar and footer */
+    /* Hide Fork + GitHub at top; keep ⋮ menu */
     
-    [data-testid="stToolbar"] {
+    [data-testid="stToolbar"] a {
         display: none !important;
     }
 
-    [data-testid="stHeader"] {
-        display: none !important;
-    }
-
+    /* Hide bottom GitHub + Streamlit badges */
     footer {
         visibility: hidden !important;
     }
 
-    [data-testid="stStatusWidget"] {
+    [class*="viewerBadge"] {
         display: none !important;
     }
 
-    [class*="viewerBadge"] {
+    [data-testid="stStatusWidget"] {
         display: none !important;
     }
 </style>
