@@ -427,7 +427,7 @@ CUSTOM_CSS = """
         display: none !important;
     }
     
-    [data-testeid="stToolbarActions"] a {
+    [data-testid="stToolbarActions"] a {
         display: none !important;
     }
     
