@@ -20,5 +20,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 COPY lambda_handler.py ${LAMBDA_TASK_ROOT}/
 COPY src ${LAMBDA_TASK_ROOT}/src
+COPY models_ml ${LAMBDA_TASK_ROOT}/models_ml
 
 CMD ["lambda_handler.lambda_handler"]
