@@ -75,13 +75,20 @@ def get_model_info():
 
 
 def get_training_report():
-    """Get training report from API"""
     try:
-        response = requests.get(f"{config.API_URL}/training-report", timeout=5)
-        if response.status_code == 200:
-            return response.json()
-        return None
-    except:
+        import boto3
+        s3 = boto3.client(
+            's3',
+            region_name='us-east-1',
+            aws_access_key_id=st.secrets["aws"]["AWS_ACCESS_KEY_ID"],
+            aws_secret_access_key=st.secrets["aws"]["AWS_SECRET_ACCESS_KEY"]
+        )
+        response = s3.get_object(
+            Bucket='pump-anomaly-models-prod-2026',
+            Key='training_report.json'
+        )
+        return json.loads(response['Body'].read().decode('utf-8'))
+    except Exception as e:
         return None
 
 
@@ -94,9 +101,8 @@ def predict_audio(audio_bytes, filename):
         audio_b64 = base64.b64encode(audio_bytes).decode('utf-8')
         response = requests.post(
             f"{config.API_URL}/predict",
-            data=audio_b64,
-            headers={"Content-Type": "text/plain"},
-            timeout=30
+            data=audio_bytes, 
+            headers={"Content-Type": "audio/wav"},
         )
         if response.status_code == 200:
             return response.json(), None
@@ -153,14 +159,14 @@ def main():
     render_sidebar()
     
     # Main header
-    st.markdown('<h1 class="main-header">Pump Anomaly Detection System</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">Pump Fault Detection</h1>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">AI-Powered Acoustic Analysis with Explainability</p>', unsafe_allow_html=True)
     
     # Check API connection
     is_healthy, _ = check_api_health()
     
     if not is_healthy:
-        st.error("⚠️ **API Server Not Connected!** Please start the API server before using this interface.")
+        st.error("**API Server Not Connected!** Please start the API server before using this interface.")
         st.info("Start the server with: `uvicorn main:app --host 0.0.0.0 --port 8000 --reload`")
         return
     
